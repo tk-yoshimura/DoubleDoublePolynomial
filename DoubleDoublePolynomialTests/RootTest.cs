@@ -15,6 +15,7 @@ namespace DoubleDoublePolynomialTests {
             Polynomial p4 = Polynomial.OrderLess(2, -4, 2);
             Polynomial p5 = Polynomial.OrderLess(-1, 1) * Polynomial.OrderLess(-10000000, 1);
             Polynomial p6 = Polynomial.OrderLess(-1, 1) * Polynomial.OrderLess(10000000, 1);
+            Polynomial p7 = p3 * Polynomial.OrderLess(4, 1);
 
             Assert.AreEqual(new Vector(Array.Empty<ddouble>()), p0.RealRoots);
             Assert.AreEqual(new Vector(Array.Empty<ddouble>()), p1.RealRoots);
@@ -23,6 +24,7 @@ namespace DoubleDoublePolynomialTests {
             Assert.AreEqual(new Vector(1, 1), p4.RealRoots);
             Assert.AreEqual(new Vector(1, 10000000), p5.RealRoots);
             Assert.AreEqual(new Vector(-10000000, 1), p6.RealRoots);
+            Assert.AreEqual(new Vector(-4, 1, 1), p7.RealRoots);
         }
 
         [TestMethod]

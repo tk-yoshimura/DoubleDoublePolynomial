@@ -160,5 +160,35 @@ namespace DoubleDoublePolynomial {
         public static Polynomial operator %(Polynomial p1, Polynomial p2) {
             return DivRem(p1, p2).remainder;
         }
+
+        public static Polynomial XShift(Polynomial p, ddouble mx) {
+            int n = p.coefs.Count;
+            
+            ddouble[] coefs = new ddouble[n], v = new ddouble[checked(n + 1)];
+
+            for (int j = 0; j < n; j++) {
+                v[j] = 1d;
+
+                for (int i = 0; i <= j; i++) {
+                    coefs[i] += p.coefs[j] * v[i];
+                }
+
+                if (j < n - 1) {
+                    ddouble[] w = new ddouble[n + 1];
+                    w[0] = -mx * v[0];
+
+                    for (int i = 1; i <= j; i++) {
+                        w[i] = v[i - 1] - mx * v[i];
+                    }
+
+                    v = w;
+                }
+            }
+
+            Polynomial ret = OrderLess(coefs);
+            ret.Order = p.Order;
+
+            return ret;
+        }
     }
 }

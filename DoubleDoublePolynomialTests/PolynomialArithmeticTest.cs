@@ -217,5 +217,20 @@ namespace DoubleDoublePolynomialTests {
             Assert.AreEqual("0.5 x + 1.5", (p2 / p1).ToString());
             Assert.AreEqual("0.5 x + 1.5", (p2 / 2).ToString());
         }
+
+        [TestMethod]
+        public void XShiftTest() {
+            Polynomial p0 = Polynomial.OrderGreater(1);
+            Polynomial p1 = Polynomial.OrderGreater(1, 3);
+            Polynomial p2 = p1 * p1;
+            Polynomial p3 = p2 * p1;
+            Polynomial p4 = p3 * p1;
+
+            Assert.AreEqual("1", Polynomial.XShift(p0, 3).ToString());
+            Assert.AreEqual(Polynomial.OrderGreater(1, 0).ToString(), Polynomial.XShift(p1, 3).ToString());
+            Assert.AreEqual(Polynomial.OrderGreater(1, 0, 0).ToString(), Polynomial.XShift(p2, 3).ToString());
+            Assert.AreEqual(Polynomial.OrderGreater(1, 0, 0, 0).ToString(), Polynomial.XShift(p3, 3).ToString());
+            Assert.AreEqual(Polynomial.OrderGreater(1, 0, 0, 0, 0).ToString(), Polynomial.XShift(p4, 3).ToString());
+        }
     }
 }

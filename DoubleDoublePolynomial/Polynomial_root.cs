@@ -1,6 +1,7 @@
 ﻿using Algebra;
 using ComplexAlgebra;
 using DoubleDouble;
+using DoubleDoubleComplex;
 using System.Diagnostics;
 
 namespace DoubleDoublePolynomial {
@@ -32,15 +33,51 @@ namespace DoubleDoublePolynomial {
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        public ComplexVector Roots => ComplexMatrix.EigenValues(CompanionMatrix);
+        public ComplexVector Roots => Degree <= 2 ? RootsLessDegree() : ComplexMatrix.EigenValues(CompanionMatrix);
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        public Vector RealRoots => Degree <= 2 ? RootsLessDegree() :
+        public Vector RealRoots => Degree <= 2 ? RealRootsLessDegree() :
             new(Roots.Where(c => ddouble.Ldexp(ddouble.Abs(c.val.R), -80) >= ddouble.Abs(c.val.I) || ddouble.Abs(c.val.I) < 1e-250)
                      .Select(c => c.val.R).OrderBy(r => r)
             );
 
-        private Vector RootsLessDegree() {
+        private ComplexVector RootsLessDegree() {
+            Debug.Assert(Degree <= 2);
+
+            if (Degree < 1) {
+                return new Vector(Array.Empty<ddouble>());
+            }
+            if (Degree <= 1) {
+                return new Vector(-coefs[0] / coefs[1]);
+            }
+
+            ddouble a = coefs[2], b = coefs[1] / a, c = coefs[0] / a;
+
+            ddouble d = b * b - ddouble.Ldexp(c, 2);
+
+            Complex e = Complex.Sqrt(d);
+
+            Complex z1, z2;
+
+            if (ddouble.IsPositive(b)) {
+                Complex f = -e - b;
+
+                z1 = Complex.Ldexp(f, -1);
+                z2 = ddouble.Ldexp(c, 1) / f;
+            }
+            else {
+                Complex f = e - b;
+
+                z1 = ddouble.Ldexp(c, 1) / f;
+                z2 = Complex.Ldexp(f, -1);
+            }
+
+            return new ComplexVector(z1, z2);
+        }
+    
+        private Vector RealRootsLessDegree() {
+            Debug.Assert(Degree <= 2);
+
             if (Degree < 1) {
                 return new Vector(Array.Empty<ddouble>());
             }
