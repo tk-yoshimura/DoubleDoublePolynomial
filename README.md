@@ -1,4 +1,4 @@
-# DDoubleDoublePolynomial
+# DoubleDoublePolynomial
  Double-Double Polynomial Implements
 
 ## Requirement
