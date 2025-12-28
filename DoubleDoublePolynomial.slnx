@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="DoubleDoublePolynomialTests/DoubleDoublePolynomialTests.csproj" Id="0e60c5f4-7302-425c-9a0f-373b4e3ce48e">
+    <BuildDependency Project="DoubleDoublePolynomial\DoubleDoublePolynomial.csproj" />
+  </Project>
+  <Project Path="DoubleDoublePolynomial\DoubleDoublePolynomial.csproj" />
+</Solution>
