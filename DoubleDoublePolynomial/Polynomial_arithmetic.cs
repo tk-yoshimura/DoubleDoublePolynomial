@@ -7,10 +7,21 @@ namespace DoubleDoublePolynomial {
         }
 
         public static Polynomial operator +(Polynomial p, ddouble c) {
-            Polynomial ret = OrderLess(p.coefs.Select(p => p + c));
-            ret.Order = p.Order;
+            if (p.coefs.Count > 0) {
+                ddouble[] coefs = p.Coefs;
+                coefs[0] += c;
 
-            return ret;
+                Polynomial ret = OrderLess(coefs);
+                ret.Order = p.Order;
+
+                return ret;
+            }
+            else { 
+                Polynomial ret = OrderLess(c);
+                ret.Order = p.Order;
+
+                return ret;
+            }
         }
 
         public static Polynomial operator +(ddouble c, Polynomial p) {
@@ -42,17 +53,25 @@ namespace DoubleDoublePolynomial {
         }
 
         public static Polynomial operator -(Polynomial p, ddouble c) {
-            Polynomial ret = OrderLess(p.coefs.Select(p => p - c));
-            ret.Order = p.Order;
+            if (p.coefs.Count > 0) {
+                ddouble[] coefs = p.Coefs;
+                coefs[0] -= c;
 
-            return ret;
+                Polynomial ret = OrderLess(coefs);
+                ret.Order = p.Order;
+
+                return ret;
+            }
+            else { 
+                Polynomial ret = OrderLess(-c);
+                ret.Order = p.Order;
+
+                return ret;
+            }
         }
 
         public static Polynomial operator -(ddouble c, Polynomial p) {
-            Polynomial ret = OrderLess(p.coefs.Select(p => c - p));
-            ret.Order = p.Order;
-
-            return ret;
+            return c + (-p);
         }
 
         public static Polynomial operator -(Polynomial p1, Polynomial p2) {

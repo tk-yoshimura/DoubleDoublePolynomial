@@ -18,6 +18,7 @@ namespace DoubleDoublePolynomialTests {
             Polynomial p10 = Polynomial.OrderLess(-2, 1, 1, -3);
 
             Assert.AreEqual("8 + 2 x", (p2 + p3).ToString());
+            Assert.AreEqual("8 + 2 x", (+(p2 + p3)).ToString());
             Assert.AreEqual("6 + 3 x", (p2 + p3 + p4).ToString());
             Assert.AreEqual("5 + 2 x", ((p2 + p3 + p4) + p5).ToString());
             Assert.AreEqual("0", (p1 + p1).ToString());
@@ -27,6 +28,10 @@ namespace DoubleDoublePolynomialTests {
             Assert.AreEqual("-3 + 3 x - 3 x^2", (p7 + p8).ToString());
             Assert.AreEqual("3 - 2 x + 2 x^2 + 4 x^3", (p7 + p9).ToString());
             Assert.AreEqual("x + x^3", (p9 + p10).ToString());
+            Assert.AreEqual("5 - 2 x + 3 x^2", (p7 + 4).ToString());
+            Assert.AreEqual("5 - 2 x + 3 x^2", (4 + p7).ToString());
+            Assert.AreEqual("4", (Polynomial.Zero + 4).ToString());
+            Assert.AreEqual("4", (4 + Polynomial.Zero).ToString());
         }
 
         [TestMethod]
@@ -43,6 +48,7 @@ namespace DoubleDoublePolynomialTests {
             Polynomial p10 = Polynomial.OrderGreater(-3, 1, 1, -2);
 
             Assert.AreEqual("2 x + 8", (p2 + p3).ToString());
+            Assert.AreEqual("2 x + 8", (+(p2 + p3)).ToString());
             Assert.AreEqual("3 x + 6", (p2 + p3 + p4).ToString());
             Assert.AreEqual("2 x + 5", ((p2 + p3 + p4) + p5).ToString());
             Assert.AreEqual("0", (p1 + p1).ToString());
@@ -52,6 +58,10 @@ namespace DoubleDoublePolynomialTests {
             Assert.AreEqual("-3 x^2 + 3 x - 3", (p7 + p8).ToString());
             Assert.AreEqual("4 x^3 + 2 x^2 - 2 x + 3", (p7 + p9).ToString());
             Assert.AreEqual("x^3 + x", (p9 + p10).ToString());
+            Assert.AreEqual("3 x^2 - 2 x + 5", (p7 + 4).ToString());
+            Assert.AreEqual("3 x^2 - 2 x + 5", (4 + p7).ToString());
+            Assert.AreEqual("4", (Polynomial.Zero + 4).ToString());
+            Assert.AreEqual("4", (4 + Polynomial.Zero).ToString());
         }
 
         [TestMethod]
@@ -69,6 +79,7 @@ namespace DoubleDoublePolynomialTests {
 
             Assert.AreEqual("-2", (p2 - p3).ToString());
             Assert.AreEqual("2", (p3 - p2).ToString());
+            Assert.AreEqual("-8 - 2 x", (-(p2 + p3)).ToString());
             Assert.AreEqual("5", (p2 - p4).ToString());
             Assert.AreEqual("7", (p3 - p4).ToString());
             Assert.AreEqual("4 + 2 x", (p2 - p5).ToString());
@@ -78,6 +89,10 @@ namespace DoubleDoublePolynomialTests {
             Assert.AreEqual("5 - 7 x + 9 x^2", (p7 - p8).ToString());
             Assert.AreEqual("-1 - 2 x + 4 x^2 - 4 x^3", (p7 - p9).ToString());
             Assert.AreEqual("4 - x - 2 x^2 + 7 x^3", (p9 - p10).ToString());
+            Assert.AreEqual("-3 - 2 x + 3 x^2", (p7 - 4).ToString());
+            Assert.AreEqual("3 + 2 x - 3 x^2", (4 - p7).ToString());
+            Assert.AreEqual("-4", (Polynomial.Zero - 4).ToString());
+            Assert.AreEqual("4", (4 - Polynomial.Zero).ToString());
         }
 
         [TestMethod]
@@ -95,6 +110,7 @@ namespace DoubleDoublePolynomialTests {
 
             Assert.AreEqual("-2", (p2 - p3).ToString());
             Assert.AreEqual("2", (p3 - p2).ToString());
+            Assert.AreEqual("-2 x - 8", (-(p2 + p3)).ToString());
             Assert.AreEqual("5", (p2 - p4).ToString());
             Assert.AreEqual("7", (p3 - p4).ToString());
             Assert.AreEqual("2 x + 4", (p2 - p5).ToString());
@@ -104,6 +120,10 @@ namespace DoubleDoublePolynomialTests {
             Assert.AreEqual("9 x^2 - 7 x + 5", (p7 - p8).ToString());
             Assert.AreEqual("-4 x^3 + 4 x^2 - 2 x - 1", (p7 - p9).ToString());
             Assert.AreEqual("7 x^3 - 2 x^2 - x + 4", (p9 - p10).ToString());
+            Assert.AreEqual("3 x^2 - 2 x - 3", (p7 - 4).ToString());
+            Assert.AreEqual("-3 x^2 + 2 x + 3", (4 - p7).ToString());
+            Assert.AreEqual("-4", (Polynomial.Zero - 4).ToString());
+            Assert.AreEqual("4", (4 - Polynomial.Zero).ToString());
         }
 
         [TestMethod]
@@ -159,6 +179,7 @@ namespace DoubleDoublePolynomialTests {
             Assert.AreEqual((p2 * p3 * p1).ToString(), (((p2 * p3) * (p4 * p5) * p1) / (p4 * p5)).ToString());
             Assert.AreEqual("1", (p1 / p1).ToString());
             Assert.AreEqual("1.5 + 0.5 x", (p2 / p1).ToString());
+            Assert.AreEqual("1.5 + 0.5 x", (p2 / 2).ToString());
 
             Assert.AreEqual("0", ((p2 * p3) % p3).ToString());
             Assert.AreEqual("0", (p2 % p2).ToString());
@@ -194,6 +215,7 @@ namespace DoubleDoublePolynomialTests {
             Assert.AreEqual((p2 * p3 * p1).ToString(), (((p2 * p3) * (p4 * p5) * p1) / (p4 * p5)).ToString());
             Assert.AreEqual("1", (p1 / p1).ToString());
             Assert.AreEqual("0.5 x + 1.5", (p2 / p1).ToString());
+            Assert.AreEqual("0.5 x + 1.5", (p2 / 2).ToString());
         }
     }
 }
