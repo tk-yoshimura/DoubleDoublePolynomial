@@ -3,6 +3,108 @@
 namespace DoubleDoublePolynomialTests {
     [TestClass]
     public sealed class PolynomialArithmeticTest {
+        
+        [TestMethod]
+        public void AddOrderLessTest() {
+            Polynomial p1 = Polynomial.OrderLess(0);
+            Polynomial p2 = Polynomial.OrderLess(3, 1);
+            Polynomial p3 = Polynomial.OrderLess(5, 1);
+            Polynomial p4 = Polynomial.OrderLess(-2, 1);
+            Polynomial p5 = Polynomial.OrderLess(-1, -1);
+            Polynomial p6 = Polynomial.OrderLess(2);
+            Polynomial p7 = Polynomial.OrderLess(1, -2, 3);
+            Polynomial p8 = Polynomial.OrderLess(-4, 5, -6);
+            Polynomial p9 = Polynomial.OrderLess(2, 0, -1, 4);
+            Polynomial p10 = Polynomial.OrderLess(-2, 1, 1, -3);
+
+            Assert.AreEqual("8 + 2 x", (p2 + p3).ToString());
+            Assert.AreEqual("6 + 3 x", (p2 + p3 + p4).ToString());
+            Assert.AreEqual("5 + 2 x", ((p2 + p3 + p4) + p5).ToString());
+            Assert.AreEqual("0", (p1 + p1).ToString());
+            Assert.AreEqual("0", (Polynomial.Zero + p1).ToString());
+            Assert.AreEqual("5 + x", (p2 + p6).ToString());
+            Assert.AreEqual("5 + x", (p6 + p2).ToString());
+            Assert.AreEqual("-3 + 3 x - 3 x^2", (p7 + p8).ToString());
+            Assert.AreEqual("3 - 2 x + 2 x^2 + 4 x^3", (p7 + p9).ToString());
+            Assert.AreEqual("x + x^3", (p9 + p10).ToString());
+        }
+
+        [TestMethod]
+        public void AddOrderGreaterTest() {
+            Polynomial p1 = Polynomial.OrderGreater(0);
+            Polynomial p2 = Polynomial.OrderGreater(1, 3);
+            Polynomial p3 = Polynomial.OrderGreater(1, 5);
+            Polynomial p4 = Polynomial.OrderGreater(1, -2);
+            Polynomial p5 = Polynomial.OrderGreater(-1, -1);
+            Polynomial p6 = Polynomial.OrderGreater(2);
+            Polynomial p7 = Polynomial.OrderGreater(3, -2, 1);
+            Polynomial p8 = Polynomial.OrderGreater(-6, 5, -4);
+            Polynomial p9 = Polynomial.OrderGreater(4, -1, 0, 2);
+            Polynomial p10 = Polynomial.OrderGreater(-3, 1, 1, -2);
+
+            Assert.AreEqual("2 x + 8", (p2 + p3).ToString());
+            Assert.AreEqual("3 x + 6", (p2 + p3 + p4).ToString());
+            Assert.AreEqual("2 x + 5", ((p2 + p3 + p4) + p5).ToString());
+            Assert.AreEqual("0", (p1 + p1).ToString());
+            Assert.AreEqual("0", (Polynomial.Zero + p1).ToString());
+            Assert.AreEqual("x + 5", (p2 + p6).ToString());
+            Assert.AreEqual("x + 5", (p6 + p2).ToString());
+            Assert.AreEqual("-3 x^2 + 3 x - 3", (p7 + p8).ToString());
+            Assert.AreEqual("4 x^3 + 2 x^2 - 2 x + 3", (p7 + p9).ToString());
+            Assert.AreEqual("x^3 + x", (p9 + p10).ToString());
+        }
+
+        [TestMethod]
+        public void SubOrderLessTest() {
+            Polynomial p1 = Polynomial.OrderLess(0);
+            Polynomial p2 = Polynomial.OrderLess(3, 1);
+            Polynomial p3 = Polynomial.OrderLess(5, 1);
+            Polynomial p4 = Polynomial.OrderLess(-2, 1);
+            Polynomial p5 = Polynomial.OrderLess(-1, -1);
+            Polynomial p6 = Polynomial.OrderLess(2);
+            Polynomial p7 = Polynomial.OrderLess(1, -2, 3);
+            Polynomial p8 = Polynomial.OrderLess(-4, 5, -6);
+            Polynomial p9 = Polynomial.OrderLess(2, 0, -1, 4);
+            Polynomial p10 = Polynomial.OrderLess(-2, 1, 1, -3);
+
+            Assert.AreEqual("-2", (p2 - p3).ToString());
+            Assert.AreEqual("2", (p3 - p2).ToString());
+            Assert.AreEqual("5", (p2 - p4).ToString());
+            Assert.AreEqual("7", (p3 - p4).ToString());
+            Assert.AreEqual("4 + 2 x", (p2 - p5).ToString());
+            Assert.AreEqual("-1 - x", (p6 - p2).ToString());
+            Assert.AreEqual("0", (p1 - p1).ToString());
+            Assert.AreEqual("0", (Polynomial.Zero - p1).ToString());
+            Assert.AreEqual("5 - 7 x + 9 x^2", (p7 - p8).ToString());
+            Assert.AreEqual("-1 - 2 x + 4 x^2 - 4 x^3", (p7 - p9).ToString());
+            Assert.AreEqual("4 - x - 2 x^2 + 7 x^3", (p9 - p10).ToString());
+        }
+
+        [TestMethod]
+        public void SubOrderGreaterTest() {
+            Polynomial p1 = Polynomial.OrderGreater(0);
+            Polynomial p2 = Polynomial.OrderGreater(1, 3);
+            Polynomial p3 = Polynomial.OrderGreater(1, 5);
+            Polynomial p4 = Polynomial.OrderGreater(1, -2);
+            Polynomial p5 = Polynomial.OrderGreater(-1, -1);
+            Polynomial p6 = Polynomial.OrderGreater(2);
+            Polynomial p7 = Polynomial.OrderGreater(3, -2, 1);
+            Polynomial p8 = Polynomial.OrderGreater(-6, 5, -4);
+            Polynomial p9 = Polynomial.OrderGreater(4, -1, 0, 2);
+            Polynomial p10 = Polynomial.OrderGreater(-3, 1, 1, -2);
+
+            Assert.AreEqual("-2", (p2 - p3).ToString());
+            Assert.AreEqual("2", (p3 - p2).ToString());
+            Assert.AreEqual("5", (p2 - p4).ToString());
+            Assert.AreEqual("7", (p3 - p4).ToString());
+            Assert.AreEqual("2 x + 4", (p2 - p5).ToString());
+            Assert.AreEqual("-x - 1", (p6 - p2).ToString());
+            Assert.AreEqual("0", (p1 - p1).ToString());
+            Assert.AreEqual("0", (Polynomial.Zero - p1).ToString());
+            Assert.AreEqual("9 x^2 - 7 x + 5", (p7 - p8).ToString());
+            Assert.AreEqual("-4 x^3 + 4 x^2 - 2 x - 1", (p7 - p9).ToString());
+            Assert.AreEqual("7 x^3 - 2 x^2 - x + 4", (p9 - p10).ToString());
+        }
 
         [TestMethod]
         public void MulOrderLessTest() {
