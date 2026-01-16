@@ -105,7 +105,31 @@ namespace DoubleDoublePolynomialTests {
         }
 
         [TestMethod]
-        public void ParseTest() {
+        public void ParseOrderLessTest() {
+            string s0 = "3-4.2x+8x^2+1.0e-6x^4";
+            string s1 = "3 - 4.2x + 8x^2 + 1.0e-6x^4";
+            string s2 = "+3 - 4.2 x + 8 x^2 + 1.0e-6 x^4";
+            string s3 = "0";
+            string s4 = "-0";
+            string s5 = "1+x";
+
+            Polynomial p0 = Polynomial.Parse(s0);
+            Polynomial p1 = Polynomial.Parse(s1);
+            Polynomial p2 = Polynomial.Parse(s2);
+            Polynomial p3 = Polynomial.Parse(s3);
+            Polynomial p4 = Polynomial.Parse(s4);
+            Polynomial p5 = Polynomial.Parse(s5);
+
+            Assert.AreEqual("3 - 4.2 x + 8 x^2 + 1e-6 x^4", p0.ToString());
+            Assert.AreEqual("3 - 4.2 x + 8 x^2 + 1e-6 x^4", p1.ToString());
+            Assert.AreEqual("3 - 4.2 x + 8 x^2 + 1e-6 x^4", p2.ToString());
+            Assert.AreEqual("0", p3.ToString());
+            Assert.AreEqual("0", p4.ToString());
+            Assert.AreEqual("1 + x", p5.ToString());
+        }
+
+        [TestMethod]
+        public void ParseOrderGreaterTest() {
             string s0 = "1.0e-6x^4+8x^2-4.2x+3";
             string s1 = "1.0e-6x^4 + 8x^2 - 4.2x + 3";
             string s2 = "1.0e-6 x^4 + 8 x^2 - 4.2 x + 3";
@@ -122,6 +146,7 @@ namespace DoubleDoublePolynomialTests {
         [TestMethod]
         public void InvalidParseTest() {
             string[] strs = [
+                "",
                 "x^^2",
                 "2xx",
                 "x^",
