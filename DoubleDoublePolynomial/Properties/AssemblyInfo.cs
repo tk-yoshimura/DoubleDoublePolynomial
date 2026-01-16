@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("DoubleDouble")]
+[assembly: AssemblyTitle("DoubleDoublePolynomial")]
 [assembly: AssemblyDescription("Double-Double Polynomial Implements")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]

@@ -1,4 +1,5 @@
-﻿using DoubleDoublePolynomial;
+﻿using Algebra;
+using DoubleDoublePolynomial;
 
 namespace DoubleDoublePolynomialTests {
     [TestClass]
@@ -241,6 +242,27 @@ namespace DoubleDoublePolynomialTests {
             Assert.AreEqual(p1.ToString(), Polynomial.Differentiate(p0).ToString());
             Assert.AreEqual(p0.ToString(), Polynomial.Integrate(p1, 6).ToString());
             Assert.AreEqual((p0 - 6).ToString(), Polynomial.Integrate(p1).ToString());
+        }
+
+        [TestMethod]
+        public void UsageTest() {
+            Polynomial p1 = Polynomial.OrderLess(5, 1); // 5 + x
+            Polynomial p2 = Polynomial.OrderGreater(-1, -2); // -x - 2
+
+            Polynomial p3 = p1 * p2; // operator +, -, *, /, %
+
+            Vector roots = p3.RealRoots;
+
+            Polynomial p4 = Polynomial.Differentiate(p3);
+            Polynomial p5 = Polynomial.Integrate(p3);
+
+            Polynomial p6 = Polynomial.Parse("3 - 4.2 x + 8 x^2 + 1.0e-6 x^4");
+
+            Console.WriteLine(p4);
+            Console.WriteLine(p5);
+            Console.WriteLine(p6);
+
+            Console.WriteLine(roots);
         }
     }
 }
