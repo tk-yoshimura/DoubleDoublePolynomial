@@ -232,5 +232,15 @@ namespace DoubleDoublePolynomialTests {
             Assert.AreEqual(Polynomial.OrderGreater(1, 0, 0, 0).ToString(), Polynomial.XShift(p3, 3).ToString());
             Assert.AreEqual(Polynomial.OrderGreater(1, 0, 0, 0, 0).ToString(), Polynomial.XShift(p4, 3).ToString());
         }
+
+        [TestMethod]
+        public void DifferentiateTest() {
+            Polynomial p0 = Polynomial.OrderGreater(5, 7, 3, 6);
+            Polynomial p1 = Polynomial.OrderGreater(15, 14, 3);
+
+            Assert.AreEqual(p1.ToString(), Polynomial.Differentiate(p0).ToString());
+            Assert.AreEqual(p0.ToString(), Polynomial.Integrate(p1, 6).ToString());
+            Assert.AreEqual((p0 - 6).ToString(), Polynomial.Integrate(p1).ToString());
+        }
     }
 }

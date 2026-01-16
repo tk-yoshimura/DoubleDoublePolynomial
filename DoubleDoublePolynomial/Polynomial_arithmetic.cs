@@ -2,6 +2,16 @@
 
 namespace DoubleDoublePolynomial {
     public partial class Polynomial {
+
+        private static void KahanAdd(ref ddouble acc, ref ddouble carry, ddouble v) {
+            ddouble d = v - carry;
+            ddouble acc_next = acc + d;
+
+            carry = (acc_next - acc) - d;
+            acc = acc_next;
+        }
+
+
         public static Polynomial operator +(Polynomial p) {
             return p;
         }
@@ -16,7 +26,7 @@ namespace DoubleDoublePolynomial {
 
                 return ret;
             }
-            else { 
+            else {
                 Polynomial ret = OrderLess(c);
                 ret.Order = p.Order;
 
@@ -62,7 +72,7 @@ namespace DoubleDoublePolynomial {
 
                 return ret;
             }
-            else { 
+            else {
                 Polynomial ret = OrderLess(-c);
                 ret.Order = p.Order;
 
@@ -104,10 +114,11 @@ namespace DoubleDoublePolynomial {
 
         public static Polynomial operator *(Polynomial p1, Polynomial p2) {
             ddouble[] coefs = new ddouble[checked(p1.Degree + p2.Degree + 1)];
+            ddouble[] coefs_carry = new ddouble[coefs.Length];
 
             for (int j = 0; j < p2.coefs.Count; j++) {
                 for (int i = 0; i < p1.coefs.Count; i++) {
-                    coefs[i + j] += p1.coefs[i] * p2.coefs[j];
+                    KahanAdd(ref coefs[i + j], ref coefs_carry[i + j], p1.coefs[i] * p2.coefs[j]);
                 }
             }
 
@@ -135,6 +146,7 @@ namespace DoubleDoublePolynomial {
             ddouble d = p2.coefs[^1];
             ddouble[] quotient = new ddouble[checked(p1.Degree - p2.Degree + 1)];
             ddouble[] remainer = [.. p1.coefs];
+            ddouble[] remainer_carry = new ddouble[remainer.Length];
 
             for (int i = quotient.Length - 1; i >= 0; i--) {
                 ddouble r = remainer[i + p2.coefs.Count - 1] / d;
@@ -143,7 +155,7 @@ namespace DoubleDoublePolynomial {
 
                 remainer[i + p2.coefs.Count - 1] = 0d;
                 for (int j = p2.coefs.Count - 2; j >= 0; j--) {
-                    remainer[i + j] -= r * p2.coefs[j];
+                    KahanAdd(ref remainer[i + j], ref remainer_carry[i + j], -r * p2.coefs[j]);
                 }
             }
 
@@ -163,14 +175,14 @@ namespace DoubleDoublePolynomial {
 
         public static Polynomial XShift(Polynomial p, ddouble mx) {
             int n = p.coefs.Count;
-            
-            ddouble[] coefs = new ddouble[n], v = new ddouble[n];
+
+            ddouble[] coefs = new ddouble[n], coefs_carry = new ddouble[n], v = new ddouble[n];
 
             for (int j = 0; j < n; j++) {
                 v[j] = 1d;
 
                 for (int i = 0; i <= j; i++) {
-                    coefs[i] += p.coefs[j] * v[i];
+                    KahanAdd(ref coefs[i], ref coefs_carry[i], p.coefs[j] * v[i]);
                 }
 
                 if (j >= n - 1) {
@@ -192,5 +204,41 @@ namespace DoubleDoublePolynomial {
 
             return ret;
         }
+
+        public static Polynomial Differentiate(Polynomial p) {
+            if (p.Degree <= 0) {
+                return Zero;
+            }
+
+            ddouble[] coefs = new ddouble[p.coefs.Count - 1];
+
+            coefs[0] = p.coefs[1];
+
+            for (int i = 2; i < p.coefs.Count; i++) {
+                coefs[i - 1] = p.coefs[i] * i;
+            }
+
+            Polynomial ret = OrderLess(coefs);
+            ret.Order = p.Order;
+
+            return ret;
+        }
+
+        public static Polynomial Integrate(Polynomial p, ddouble c) {
+            ddouble[] coefs = new ddouble[checked(p.coefs.Count + 1)];
+
+            coefs[0] = c;
+
+            for (int i = 0; i < p.coefs.Count; i++) {
+                coefs[i + 1] = p.coefs[i] / (i + 1);
+            }
+
+            Polynomial ret = OrderLess(coefs);
+            ret.Order = p.Order;
+
+            return ret;
+        }
+
+        public static Polynomial Integrate(Polynomial p) => Integrate(p, 0d);
     }
 }
