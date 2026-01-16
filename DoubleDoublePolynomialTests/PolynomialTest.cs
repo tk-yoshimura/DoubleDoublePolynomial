@@ -103,5 +103,37 @@ namespace DoubleDoublePolynomialTests {
 
             Console.WriteLine(p);
         }
+
+        [TestMethod]
+        public void ParseTest() {
+            string s0 = "1.0e-6x^4+8x^2-4.2x+3";
+            string s1 = "1.0e-6x^4 + 8x^2 - 4.2x + 3";
+            string s2 = "1.0e-6 x^4 + 8 x^2 - 4.2 x + 3";
+
+            Polynomial p0 = Polynomial.Parse(s0);
+            Polynomial p1 = Polynomial.Parse(s1);
+            Polynomial p2 = Polynomial.Parse(s2);
+
+            Assert.AreEqual("1e-6 x^4 + 8 x^2 - 4.2 x + 3", p0.ToString());
+            Assert.AreEqual("1e-6 x^4 + 8 x^2 - 4.2 x + 3", p1.ToString());
+            Assert.AreEqual("1e-6 x^4 + 8 x^2 - 4.2 x + 3", p2.ToString());
+        }
+
+        [TestMethod]
+        public void InvalidParseTest() {
+            string[] strs = [
+                "x^^2",
+                "2xx",
+                "x^",
+                "+*3",
+                "3+",
+                "e10x",
+                "x^1.5",
+            ];
+
+            foreach (string s in strs) {
+                Assert.ThrowsExactly<FormatException>(() => Polynomial.Parse(s));
+            }
+        }
     }
 }

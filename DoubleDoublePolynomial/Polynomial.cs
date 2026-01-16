@@ -43,6 +43,26 @@ namespace DoubleDoublePolynomial {
 
         public static Polynomial OrderGreater(IEnumerable<ddouble> coefs) => new([.. coefs], orderless: false);
 
+        public static Polynomial FromTable(IEnumerable<(int degree, ddouble coef)> table, Order order) {
+            if (table.Where(item => item.degree < 0).Any()) {
+                throw new ArgumentException("Contains negative degree.", nameof(table));
+            }
+
+            int max_degree = table.Select(item => item.degree).Max();
+            ddouble[] coefs = new ddouble[checked(max_degree + 1)];
+
+            foreach ((int degree, ddouble coef) in table) {
+                coefs[degree] = coef;
+            }
+
+            Polynomial p = OrderLess(coefs);
+            p.Order = order;
+
+            return p;
+        }
+
+        public static Polynomial FromTable(IDictionary<int, ddouble> table, Order order) => FromTable(table.Select(item => (item.Key, item.Value)), order);
+
         public static Polynomial Zero => new([]);
 
         public static Polynomial Invalid => new([double.NaN]);
