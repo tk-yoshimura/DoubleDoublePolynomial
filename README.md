@@ -3,18 +3,18 @@
 
 ## Requirement
 .NET 10.0  
-[DoubleDouble](https://github.com/tk-yoshimura/DoubleDouble)
-[DoubleDoubleComplex](https://github.com/tk-yoshimura/DoubleDoubleComplex)
-[Algebra](https://github.com/tk-yoshimura/Algebra)
-[ComplexAlgebra](https://github.com/tk-yoshimura/ComplexAlgebra)
-[MultiPrecision](https://github.com/tk-yoshimura/MultiPrecision)
-[MultiPrecisionComplex](https://github.com/tk-yoshimura/MultiPrecisionComplex)
-[MultiPrecisionAlgebra](https://github.com/tk-yoshimura/MultiPrecisionAlgebra)
-[MultiPrecisionComplexAlgebra](https://github.com/tk-yoshimura/MultiPrecisionComplexAlgebra)
+[DoubleDouble](https://github.com/tk-yoshimura/DoubleDouble)  
+[DoubleDoubleComplex](https://github.com/tk-yoshimura/DoubleDoubleComplex)  
+[Algebra](https://github.com/tk-yoshimura/Algebra)  
+[ComplexAlgebra](https://github.com/tk-yoshimura/ComplexAlgebra)  
+[MultiPrecision](https://github.com/tk-yoshimura/MultiPrecision)  
+[MultiPrecisionComplex](https://github.com/tk-yoshimura/MultiPrecisionComplex)  
+[MultiPrecisionAlgebra](https://github.com/tk-yoshimura/MultiPrecisionAlgebra)  
+[MultiPrecisionComplexAlgebra](https://github.com/tk-yoshimura/MultiPrecisionComplexAlgebra)  
 
 ## Install
 
-[Download DLL](https://github.com/tk-yoshimura/DoubleDoublePolynomial/releases)
+[Download DLL](https://github.com/tk-yoshimura/DoubleDoublePolynomial/releases)  
 [Download Nuget](https://www.nuget.org/packages/tyoshimura.doubledouble.polynomial/)
 
 ## Usage
