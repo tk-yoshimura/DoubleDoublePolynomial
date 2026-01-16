@@ -112,6 +112,36 @@ namespace DoubleDoublePolynomialTests {
             string s3 = "0";
             string s4 = "-0";
             string s5 = "1+x";
+            string s6 = "1+x+1+2x";
+            string s7 = "+3 + 8 x^2 - 4.2 x + 1.0e-6 x^4";
+
+            Polynomial p0 = Polynomial.Parse(s0);
+            Polynomial p1 = Polynomial.Parse(s1);
+            Polynomial p2 = Polynomial.Parse(s2);
+            Polynomial p3 = Polynomial.Parse(s3);
+            Polynomial p4 = Polynomial.Parse(s4);
+            Polynomial p5 = Polynomial.Parse(s5);
+            Polynomial p6 = Polynomial.Parse(s6);
+            Polynomial p7 = Polynomial.Parse(s7);
+
+            Assert.AreEqual("3 - 4.2 x + 8 x^2 + 1e-6 x^4", p0.ToString());
+            Assert.AreEqual("3 - 4.2 x + 8 x^2 + 1e-6 x^4", p1.ToString());
+            Assert.AreEqual("3 - 4.2 x + 8 x^2 + 1e-6 x^4", p2.ToString());
+            Assert.AreEqual("0", p3.ToString());
+            Assert.AreEqual("0", p4.ToString());
+            Assert.AreEqual("1 + x", p5.ToString());
+            Assert.AreEqual("2 + 3 x", p6.ToString());
+            Assert.AreEqual("3 - 4.2 x + 8 x^2 + 1e-6 x^4", p7.ToString());
+        }
+
+        [TestMethod]
+        public void ParseOrderGreaterTest() {
+            string s0 = "1.0e-6x^4+8x^2-4.2x+3";
+            string s1 = "1.0e-6x^4 + 8x^2 - 4.2x + 3";
+            string s2 = "1.0e-6 x^4 + 8 x^2 - 4.2 x + 3";
+            string s3 = "x+1";
+            string s4 = "x+1+2x+1";
+            string s5 = "1.0e-6 x^4 - 4.2 x + 8 x^2 + 3";
 
             Polynomial p0 = Polynomial.Parse(s0);
             Polynomial p1 = Polynomial.Parse(s1);
@@ -120,27 +150,12 @@ namespace DoubleDoublePolynomialTests {
             Polynomial p4 = Polynomial.Parse(s4);
             Polynomial p5 = Polynomial.Parse(s5);
 
-            Assert.AreEqual("3 - 4.2 x + 8 x^2 + 1e-6 x^4", p0.ToString());
-            Assert.AreEqual("3 - 4.2 x + 8 x^2 + 1e-6 x^4", p1.ToString());
-            Assert.AreEqual("3 - 4.2 x + 8 x^2 + 1e-6 x^4", p2.ToString());
-            Assert.AreEqual("0", p3.ToString());
-            Assert.AreEqual("0", p4.ToString());
-            Assert.AreEqual("1 + x", p5.ToString());
-        }
-
-        [TestMethod]
-        public void ParseOrderGreaterTest() {
-            string s0 = "1.0e-6x^4+8x^2-4.2x+3";
-            string s1 = "1.0e-6x^4 + 8x^2 - 4.2x + 3";
-            string s2 = "1.0e-6 x^4 + 8 x^2 - 4.2 x + 3";
-
-            Polynomial p0 = Polynomial.Parse(s0);
-            Polynomial p1 = Polynomial.Parse(s1);
-            Polynomial p2 = Polynomial.Parse(s2);
-
             Assert.AreEqual("1e-6 x^4 + 8 x^2 - 4.2 x + 3", p0.ToString());
             Assert.AreEqual("1e-6 x^4 + 8 x^2 - 4.2 x + 3", p1.ToString());
             Assert.AreEqual("1e-6 x^4 + 8 x^2 - 4.2 x + 3", p2.ToString());
+            Assert.AreEqual("x + 1", p3.ToString());
+            Assert.AreEqual("3 x + 2", p4.ToString());
+            Assert.AreEqual("1e-6 x^4 + 8 x^2 - 4.2 x + 3", p5.ToString());
         }
 
         [TestMethod]
