@@ -2,6 +2,7 @@
 using ComplexAlgebra;
 using DoubleDouble;
 using DoubleDoubleComplex;
+using MultiPrecision;
 using System.Diagnostics;
 
 namespace DoubleDoublePolynomial {
@@ -32,12 +33,39 @@ namespace DoubleDoublePolynomial {
             }
         }
 
+        protected MultiPrecisionAlgebra.Matrix<N> CompanionMatrixMultiPrecision<N>() where N : struct, IConstant {
+            int n = Degree;
+
+            if (n <= 0) {
+                return MultiPrecisionAlgebra.Matrix<N>.Invalid(1);
+            }
+
+            MultiPrecisionAlgebra.Matrix<N> m = MultiPrecisionAlgebra.Matrix<N>.Zero(n);
+
+            MultiPrecision<N> r = MultiPrecision<N>.Abs($"{coefs[^1]}");
+
+            for (int i = 0; i < n; i++) {
+                m[n - 1, i] = $"{coefs[i]}" / -r;
+            }
+
+            for (int i = 0; i < n - 1; i++) {
+                m[i, i + 1] = MultiPrecision<N>.One;
+            }
+
+            return m;
+        }
+
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        public ComplexVector Roots => Degree <= 2 ? RootsLessDegree() : ComplexMatrix.EigenValues(CompanionMatrix);
+        public ComplexVector Roots => Degree <= 2
+            ? RootsLessDegree()
+            : new ComplexVector(
+                MultiPrecisionComplexAlgebra.ComplexMatrix<Pow2.N8>.EigenValues(CompanionMatrixMultiPrecision<Pow2.N8>())
+                .Select((item) => (Complex)$"{item}")
+            );
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public Vector RealRoots => Degree <= 2 ? RealRootsLessDegree() :
-            new(Roots.Where(c => ddouble.Ldexp(ddouble.Abs(c.val.R), -80) >= ddouble.Abs(c.val.I) || ddouble.Abs(c.val.I) < 1e-250)
+            new(Roots.Where(c => ddouble.Ldexp(ddouble.Abs(c.val.R), -100) >= ddouble.Abs(c.val.I) || ddouble.Abs(c.val.I) < 1e-250)
                      .Select(c => c.val.R).OrderBy(r => r)
             );
 
@@ -74,7 +102,7 @@ namespace DoubleDoublePolynomial {
 
             return new ComplexVector(z1, z2);
         }
-    
+
         private Vector RealRootsLessDegree() {
             Debug.Assert(Degree <= 2);
 

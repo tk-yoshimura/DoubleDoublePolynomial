@@ -3,7 +3,7 @@
 namespace DoubleDoublePolynomialTests {
     [TestClass]
     public sealed class PolynomialArithmeticTest {
-        
+
         [TestMethod]
         public void AddOrderLessTest() {
             Polynomial p1 = Polynomial.OrderLess(0);

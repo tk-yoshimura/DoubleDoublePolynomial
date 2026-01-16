@@ -1,6 +1,5 @@
 ﻿using DoubleDouble;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 
 namespace DoubleDoublePolynomial {
 
