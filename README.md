@@ -1,5 +1,5 @@
 # DoubleDoublePolynomial
- Double-Double Polynomial Implements
+ Double-Double Polynomial Implements 
 
 ## Requirement
 .NET 10.0  
