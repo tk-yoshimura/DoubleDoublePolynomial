@@ -169,6 +169,8 @@ namespace DoubleDoublePolynomialTests {
                 "3+",
                 "e10x",
                 "x^1.5",
+                "1+y",
+                "1+2y",
             ];
 
             foreach (string s in strs) {

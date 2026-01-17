@@ -8,6 +8,10 @@ namespace DoubleDoublePolynomial {
     [DebuggerDisplay("{ToString(),nq}")]
     public partial class Polynomial {
         public override string ToString() {
+            if (!IsValid(this)) {
+                return "invalid";
+            }
+
             IEnumerable<string> terms = coefs.Select((c, i) =>
                 c != 0d ? i switch {
                     0 => $"{c}",

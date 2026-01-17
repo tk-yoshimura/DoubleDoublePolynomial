@@ -1,8 +1,10 @@
 ﻿using DoubleDouble;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace DoubleDoublePolynomial {
     public partial class Polynomial {
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly ReadOnlyCollection<ddouble> coefs, coefs_reversed;
 
         public int Degree => int.Max(0, coefs.Count - 1);
@@ -44,7 +46,7 @@ namespace DoubleDoublePolynomial {
         public static Polynomial OrderGreater(IEnumerable<ddouble> coefs) => new([.. coefs], orderless: false);
 
         public static Polynomial FromTable(IEnumerable<(int degree, ddouble coef)> table, Order order) {
-            if (table.Where(item => item.degree < 0).Any()) {
+            if (table.Any(item => item.degree < 0)) {
                 throw new ArgumentException("Contains negative degree.", nameof(table));
             }
 
@@ -63,8 +65,12 @@ namespace DoubleDoublePolynomial {
 
         public static Polynomial FromTable(IDictionary<int, ddouble> table, Order order) => FromTable(table.Select(item => (item.Key, item.Value)), order);
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public static Polynomial Zero => new([]);
 
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         public static Polynomial Invalid => new([double.NaN]);
+
+        public static bool IsValid(Polynomial p) => !p.coefs.Any(ddouble.IsNaN);
     }
 }
